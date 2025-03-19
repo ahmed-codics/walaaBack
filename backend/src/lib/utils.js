@@ -5,12 +5,12 @@ export const generateToken = (userId , res) => {
         expiresIn: "7d",
     });
 
-    res.cookie("jwt" , token , {
-        maxAge: 7 * 24 * 60 * 1000,
-        httpOnly: true, 
-        samsite : "none",
-        secure : true,
-    })
+res.cookie("jwt", token, {
+    maxAge: 7 * 24 * 60 * 60 * 1000,  // 7 days (fixed time calculation)
+    httpOnly: true, 
+    sameSite: "None",  // ✅ Correct spelling + Capitalized "None"
+    secure: true,  // ✅ Required for cross-origin cookies
+});
 
     return token ;
 }
