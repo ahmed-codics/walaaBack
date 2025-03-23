@@ -8,13 +8,14 @@ const router = express.Router();
 // ✅ Create a new booking (POST request)
 router.post("/book", async (req, res) => {
   try {
-    console.log("Received booking request:", req.body);
+    console.log("Received booking request:", req.body); // Debugging Log
     let { doctorName, userId, date, time } = req.body;
 
     if (!doctorName || !userId || !date || !time) {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
+    // Validate userId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       console.log("Invalid user ID:", userId);
       return res.status(400).json({ message: "Invalid user ID format!" });
@@ -22,15 +23,24 @@ router.post("/book", async (req, res) => {
 
     userId = new mongoose.Types.ObjectId(userId);
 
+    // Find user
     const user = await User.findById(userId);
     if (!user) {
       console.log("User not found for ID:", userId);
-      return res.status(401).json({ message: "Unauthorized! Please log in." });
+      return res.status(404).json({ message: "User not found!" });
     }
 
-    const newBooking = new BookingModel({ doctorName, userId, date, time });
+    // Create new booking
+    const newBooking = new BookingModel({
+      doctorName,
+      userId,
+      date,
+      time,
+    });
 
     await newBooking.save();
+
+    // Push booking to user's array
     user.bookings.push(newBooking._id);
     await user.save();
 
@@ -40,7 +50,6 @@ router.post("/book", async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
-
 
 
 // ✅ Fetch bookings for a specific user
@@ -111,16 +120,6 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     console.error("Update Error:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
-  }
-});
-
-router.get("/available-times", async (req, res) => {
-  try {
-    const times = ["10:00 AM", "1:00 PM", "3:00 PM", "6:00 PM"];
-    res.json(times);
-  } catch (error) {
-    console.error("Error fetching available times:", error);
-    res.status(500).json({ message: "Server Error" });
   }
 });
 
