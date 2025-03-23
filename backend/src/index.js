@@ -18,7 +18,7 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: "https://walaa-y1uo.vercel.app/",  // Allow requests from your frontend
+      origin: "https://walaa-y1uo.vercel.app",  // Allow requests from your frontend
       credentials: true, // Allow cookies & session authentication
     })
   );
