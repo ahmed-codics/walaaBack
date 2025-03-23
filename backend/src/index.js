@@ -18,7 +18,7 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: ["http://localhost:5174", "http://localhost:5173",'https://walaa.vercel.app' ],  // Allow requests from your frontend
+      origin: "*",  // Allow requests from your frontend
       credentials: true, // Allow cookies & session authentication
     })
   );
