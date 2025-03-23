@@ -114,5 +114,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.get("/available-times", async (req, res) => {
+  try {
+    const times = ["10:00 AM", "1:00 PM", "3:00 PM", "6:00 PM"];
+    res.json(times);
+  } catch (error) {
+    console.error("Error fetching available times:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 
 export default router;
