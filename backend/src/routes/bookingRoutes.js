@@ -8,14 +8,13 @@ const router = express.Router();
 // ✅ Create a new booking (POST request)
 router.post("/book", async (req, res) => {
   try {
-    console.log("Received booking request:", req.body); // Debugging Log
+    console.log("Received booking request:", req.body);
     let { doctorName, userId, date, time } = req.body;
 
     if (!doctorName || !userId || !date || !time) {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
-    // Validate userId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       console.log("Invalid user ID:", userId);
       return res.status(400).json({ message: "Invalid user ID format!" });
@@ -23,24 +22,15 @@ router.post("/book", async (req, res) => {
 
     userId = new mongoose.Types.ObjectId(userId);
 
-    // Find user
     const user = await User.findById(userId);
     if (!user) {
       console.log("User not found for ID:", userId);
-      return res.status(404).json({ message: "User not found!" });
+      return res.status(401).json({ message: "Unauthorized! Please log in." });
     }
 
-    // Create new booking
-    const newBooking = new BookingModel({
-      doctorName,
-      userId,
-      date,
-      time,
-    });
+    const newBooking = new BookingModel({ doctorName, userId, date, time });
 
     await newBooking.save();
-
-    // Push booking to user's array
     user.bookings.push(newBooking._id);
     await user.save();
 
@@ -50,6 +40,7 @@ router.post("/book", async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
+
 
 
 // ✅ Fetch bookings for a specific user
