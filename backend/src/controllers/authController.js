@@ -103,7 +103,13 @@ export const checkAuth = (req, res) => {
     if (!req.user) {
       return res.status(401).json({ message: "Not authenticated" });
     }
-    res.status(200).json(req.user);
+
+    res.status(200).json({
+      _id: req.user._id,
+      fullName: req.user.fullName, // ✅ Ensure this is returned
+      email: req.user.email,
+      profilePic: req.user.profilePic,
+    });
   } catch (error) {
     console.error("Error in checkAuth controller:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
