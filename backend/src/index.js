@@ -18,10 +18,10 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: "https://walaa-y1uo.vercel.app",  // Allow requests from your frontend
-      credentials: true, // Allow cookies & session authentication
+      origin: true,  // ✅ Dynamically allows any domain
+      credentials: true, // ✅ Allows cookies & session authentication
     })
-  );
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ✅ Fix: Add `{ extended: true }`
 app.use(cookieParser());
