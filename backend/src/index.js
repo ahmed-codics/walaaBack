@@ -7,6 +7,7 @@ import { connectDB } from './lib/db.js';
 import authRoutes from './routes/authRoutes.js';
 import bookingRoutes from "./routes/bookingRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
+import doctorRoutes from "./routes/doctorRoutes.js"
 
 
 dotenv.config();
@@ -18,10 +19,10 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: true,  // ✅ Dynamically allows any domain
-      credentials: true, // ✅ Allows cookies & session authentication
+      origin: "https://walaa-y1uo.vercel.app",  // Allow requests from your frontend
+      credentials: true, // Allow cookies & session authentication
     })
-);
+  );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ✅ Fix: Add `{ extended: true }`
 app.use(cookieParser());
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/bookings" , bookingRoutes);
 app.use("/api/admin" , adminRoutes);
+app.use("/api/doctors", doctorRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
