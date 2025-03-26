@@ -19,10 +19,12 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: true,  // Allow requests from your frontend
-      credentials: true, // Allow cookies & session authentication
+        origin: "http://localhost:5174", // ✅ Allow requests from your frontend
+        credentials: true, // ✅ Allow cookies & session authentication
+        methods: ["GET", "POST", "PUT", "DELETE"], // ✅ Allow necessary HTTP methods
+        allowedHeaders: ["Content-Type", "Authorization"] // ✅ Allow necessary headers
     })
-  );
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ✅ Fix: Add `{ extended: true }`
 app.use(cookieParser());
