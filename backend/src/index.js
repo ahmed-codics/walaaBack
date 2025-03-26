@@ -19,7 +19,7 @@ connectDB();
 // ✅ Add middleware BEFORE routes
 app.use(
     cors({
-      origin: "http://localhost:5173",  // Allow requests from your frontend
+      origin: true,// Allow requests from your frontend
       credentials: true, // Allow cookies & session authentication
     })
   );
