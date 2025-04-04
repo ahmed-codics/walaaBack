@@ -2,6 +2,7 @@ import express from 'express'
 import Doctor from '../models/DoctorModel.js'
 import { fetchDocs, getDoctor, addDoctor } from '../controllers/doctorController.js';
 import multer from 'multer'
+import path from 'path'
 
 const router = express.Router();
 
