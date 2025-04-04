@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import fs from 'fs';
 
 import { connectDB } from './lib/db.js';
 import authRoutes from './routes/authRoutes.js';
@@ -15,6 +16,13 @@ const app = express();
 
 // ✅ Connect to MongoDB
 connectDB();
+
+// Make sure uploads folder exists
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+};
+
 
 // ✅ Add middleware BEFORE routes
 const allowedOrigins = ["http://localhost:5174", "https://walaa-y1uo.vercel.app"];
