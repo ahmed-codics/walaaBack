@@ -17,13 +17,21 @@ const app = express();
 connectDB();
 
 // ✅ Add middleware BEFORE routes
+const allowedOrigins = ["http://localhost:5174", "https://walaa-y1uo.vercel.app"];
+
 app.use(
-    cors({
-        origin: "http://localhost:5174", // ✅ Allow requests from your frontend
-        credentials: true, // ✅ Allow cookies & session authentication
-        methods: ["GET", "POST", "PUT", "DELETE"], // ✅ Allow necessary HTTP methods
-        allowedHeaders: ["Content-Type", "Authorization"] // ✅ Allow necessary headers
-    })
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ✅ Fix: Add `{ extended: true }`
