@@ -40,3 +40,24 @@ export const addDoctor = async (req, res) => {
     }
 };
 
+export const deleteDoctor = async (req , res) => {
+    try {
+        const {id} = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({message : "invalid ID format"});
+        }
+
+        const deletingDoctor = await Doctor.findByIdAndDelete(id);
+
+        if (!deletingDoctor) {
+            res.status(404).json({message : "Doctor Not Found!"})
+        }
+
+        res.json({message : "Doctor Deleted!"})
+
+    } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+    }
+}
+
