@@ -10,4 +10,5 @@ router.get("/:id", getDoctor);
 router.post("/", upload.single("image"), addDoctor);
 router.delete("/:id", deleteDoctor);
 
+
 export default router;
