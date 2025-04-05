@@ -21,7 +21,7 @@ export const getDoctor = async (req, res) => {
 
 export const addDoctor = async (req, res) => {
     try {
-        const {name , specialization , experience , email} = req.body;
+        const {name , specialization , experience , contact} = req.body;
         const imageUrl = req.file ? req.file.path : '';
 
         const newDoctor = new Doctor({
