@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", fetchDocs);
 router.get("/:id", getDoctor);
-router.post("/doctors", upload.single("image"), addDoctor);
+router.post("/", upload.single("image"), addDoctor);
 router.delete("/:id", deleteDoctor);
 
 export default router;
