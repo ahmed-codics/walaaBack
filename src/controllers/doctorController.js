@@ -1,4 +1,5 @@
 import Doctor from "../models/DoctorModel.js"
+import mongoose from "mongoose";
 
 export const fetchDocs = async (req , res) => {
     try {
