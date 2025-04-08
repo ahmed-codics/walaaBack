@@ -15,6 +15,7 @@ import authRoutes from './routes/authRoutes.js';
 import bookingRoutes from "./routes/bookingRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
 import doctorRoutes from "./routes/doctorRoutes.js"
+import messageRoute from './routes/messageRoutes.js'
 
 
 dotenv.config();
@@ -58,6 +59,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/bookings" , bookingRoutes);
 app.use("/api/admin" , adminRoutes);
 app.use("/api/doctors", doctorRoutes);
+app.use("/api/messages" , messageRoute)
 app.use("/uploads", express.static("uploads")); // Serve uploaded images
 
 const PORT = process.env.PORT || 5000;
