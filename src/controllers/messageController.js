@@ -46,7 +46,7 @@ export const getMessage = async (req , res) => {
           .populate('reciever' , 'username avatar')
           .exec();
 
-          res.status(200).json(messages);
+res.status(200).json(message); // ✅ use the correct variable name
     } catch (error) {
         console.error("Fetch messages error:", error);
         res.status(500).json({ error: "Failed to fetch messages" });    
