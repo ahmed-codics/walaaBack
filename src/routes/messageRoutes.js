@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/' , protectRoute, sendMessage);
 router.get('/convo' , protectRoute, getMessage);
-router.delete(':/messageId' , protectRoute, deleteMessage);
+router.delete('/:messageId/:userId', protectRoute, deleteMessage);
 router.get('/chats', protectRoute, getChatUsers);
 
 export default router;
