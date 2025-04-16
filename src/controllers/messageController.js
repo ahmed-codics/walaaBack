@@ -1,5 +1,34 @@
 import Message from "../models/messageModel.js";
 import mongoose, { mongo } from "mongoose";
+import User from "../models/userModel.js";
+
+export const getChatUsers = async (req, res) => {
+  const currentUserId = req.user._id;
+
+  try {
+    const messages = await Message.find({
+      $or: [{ sender: currentUserId }, { reciever: currentUserId }],
+    }).populate("sender reciever", "username avatar");
+
+    const chatUserMap = {};
+
+    messages.forEach((msg) => {
+      const otherUser =
+        msg.sender._id.toString() === currentUserId.toString()
+          ? msg.reciever
+          : msg.sender;
+
+      chatUserMap[otherUser._id] = otherUser;
+    });
+
+    const chatUsers = Object.values(chatUserMap);
+    res.status(200).json(chatUsers);
+  } catch (err) {
+    console.error("Get chat users error:", err);
+    res.status(500).json({ error: "Failed to load chat users" });
+  }
+};
+
 
 export const sendMessage = async (req , res) => {
     const { sender  , reciever , content } = req.body;
