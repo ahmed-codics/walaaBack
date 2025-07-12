@@ -32,7 +32,6 @@ if (!fs.existsSync(uploadsDir)) {
 
 
 // ✅ Add middleware BEFORE routes
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "https://walaa-y1uo.vercel.app"];
 
 app.use(
   cors({
